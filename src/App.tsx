@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Masonry from "react-masonry-css";
 
 function App() {
+  const [list, setList] = useState<Array<any>>([]);
+  const [count, setCount] = useState(20);
+
+  async function fetchListJSON() {
+    const response = await fetch(
+      "https://picsum.photos/v2/list?page=1&limit=" + count
+    );
+    const obj = await response.json();
+    return obj;
+  }
+
+  useEffect(() => {
+    fetchListJSON().then((data) => {
+      setList(data);
+    });
+  }, [count]);
+
+  const loadMore = (event: any) => {
+    setCount(() => count + 20);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <div>
+        <Masonry
+          breakpointCols={4}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          {list.map((item) => (
+            <div>
+              <img src={item.download_url} key={item.id} />
+            </div>
+          ))}
+        </Masonry>
+      </div>
+      <button onClick={loadMore}>Load More</button>
+    </>
   );
 }
 
