@@ -13,7 +13,7 @@ export default function Detail() {
 
   console.log(data.state);
   return (
-    <div>
+    <div className="detail-div">
       <img src={data.state.download_url} alt="" className="detail-img" />
       <h4>Author Name:</h4>
       <p>{data.state.author}</p>

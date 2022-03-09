@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../Home.css";
-import Masonry from "react-masonry-css";
-// import * as localForage from "localforage";
+import Masonry from "react-masonry-css"; // Can't get react-virtualized masonry to work
+import * as localForage from "localforage";
 import { Link } from "react-router-dom";
 
 function Home() {
   const [list, setList] = useState<Array<any>>([]);
-  const [count, setCount] = useState(12);
+  const [count, setCount] = useState(4);
+
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     async function fetchListJSON() {
@@ -17,13 +19,35 @@ function Home() {
       return obj;
     }
 
-    fetchListJSON().then((data) => {
+    fetchListJSON().then((data: any) => {
       setList(data);
     });
+
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      localForage
+        .setItem("count", count)
+        .then((res) => console.log("Set item: " + res))
+        .catch((err) => console.log(err));
+      console.log("DidUpdate");
+    }
   }, [count]);
 
-  const loadMore = (event: any) => {
-    setCount(() => count + 25);
+  useEffect(() => {
+    localForage.getItem("count").then((res: any) => {
+      if (res) {
+        console.log("Get value: " + res);
+        setCount(res);
+      } else {
+        console.log("No Get value");
+      }
+    });
+    console.log("Did Mount");
+  }, []);
+
+  const loadMore = () => {
+    setCount(() => count + 4);
   };
 
   return (
@@ -35,7 +59,7 @@ function Home() {
           columnClassName="my-masonry-grid_column"
         >
           {list.map((item) => (
-            <div>
+            <div key={item.id}>
               <Link to={{ pathname: "/images/" + item.id, state: item }}>
                 <img
                   src={item.download_url}
@@ -54,5 +78,9 @@ function Home() {
     </>
   );
 }
+
+window.onbeforeunload = () => {
+  localForage.clear();
+};
 
 export default Home;
