@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import "../Home.css";
 import Masonry from "react-masonry-css";
 // import * as localForage from "localforage";
 import { Link } from "react-router-dom";
@@ -20,21 +20,15 @@ function Home() {
     fetchListJSON().then((data) => {
       setList(data);
     });
-
-    // saveData(list);
   }, [count]);
 
   const loadMore = (event: any) => {
-    setCount(() => count + 12);
+    setCount(() => count + 25);
   };
-
-  // function saveData(resp: any) {
-  //   localForage.setItem("image", resp);
-  // }
 
   return (
     <>
-      <div>
+      <div className="home">
         <Masonry
           breakpointCols={4}
           className="my-masonry-grid"
@@ -53,8 +47,10 @@ function Home() {
             </div>
           ))}
         </Masonry>
+        <div id="load">
+          <button onClick={loadMore}>Load More</button>
+        </div>
       </div>
-      <button onClick={loadMore}>Load More</button>
     </>
   );
 }

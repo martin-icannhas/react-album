@@ -1,8 +1,15 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 
+type dataType = {
+  state: {
+    download_url: string;
+    author: string;
+  };
+};
+
 export default function Detail() {
-  const data: any = useLocation();
+  const data: dataType = useLocation();
 
   console.log(data.state);
   return (

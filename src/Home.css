@@ -2,13 +2,13 @@
   width: auto;
   height: auto;
   max-width: 100%;
-  transition-duration: 0.5s;
+  transition-duration: 0.3s;
 }
 
 .home-img:hover {
   transform: scale(1.2);
   transition-delay: 0.2s;
-  transition-duration: 1s;
+  transition-duration: 0.4s;
 }
 
 .detail-img {
@@ -22,9 +22,12 @@
   display: flex;
   margin-left: -10px; /* gutter size offset */
   width: auto;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 .my-masonry-grid_column {
-  padding-left: 30px; /* gutter size */
+  padding-left: 15px; /* gutter size */
+  padding-right: 15px;
   background-clip: padding-box;
 }
 
@@ -33,4 +36,16 @@
   /* change div to reference your elements you put in <Masonry> */
   background: transparent;
   margin-bottom: 30px;
+}
+
+#load {
+  text-align: center;
+}
+
+.home {
+  background-color: gainsboro;
+}
+
+body {
+  margin: 0;
 }
