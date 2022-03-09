@@ -1,13 +1,19 @@
-img {
+.home-img {
   width: auto;
   height: auto;
   max-width: 100%;
+  transition-duration: 0.5s;
 }
 
-img:hover {
+.home-img:hover {
   transform: scale(1.2);
   transition-delay: 0.2s;
   transition-duration: 1s;
+}
+
+.detail-img {
+  max-height: 800px;
+  width: auto;
 }
 
 .my-masonry-grid {
